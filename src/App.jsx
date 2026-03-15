@@ -14,12 +14,18 @@ export function Square({value, onSquareClick}){
 
 
 
-function Board({squares}){
+function Board({xIsNext,squares,onPlay}){
   function handleClick(i){
     if(squares[i]){
       return;
     }
     const nextSetOfSquares = squares.slice();
+    if(xIsNext){
+      nextSetOfSquares[i] ='X';
+    }
+    else {
+      nextSetOfSquares[i] = 'O';
+    }
   }
   
   return(
@@ -51,12 +57,15 @@ function Board({squares}){
 function Game(){
   
   
-  const [squares, setSquares] = useState(Array(9).fill(null));
+  const [records, setRecords] = useState(Array(9).fill(null));
   const [currentMove, setCurrentMove] = useState(0);
-  const xIsNext =  
- 
+  const xIsNext =  currentMove % 2 ===0;
+  const currentRecords = records[currentMove]; 
+  function handlePlay(currentSquares){
+    setRecords([...records,currentRecords])
+  }
   return(
-    <Board squares={squares} />
+    <Board squares={currentRecords} xIsNext = {xIsNext}  />
   );
 }
 
