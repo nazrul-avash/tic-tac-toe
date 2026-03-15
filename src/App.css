@@ -1,0 +1,21 @@
+
+.square {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: 48px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 124px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 124px;
+}
+.board{
+  background-color: pink;
+  padding: 20% 35%;
+  border: #fff solid;
+  display: flex;
+}
