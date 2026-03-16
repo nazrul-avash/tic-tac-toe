@@ -19,3 +19,7 @@
   border: #fff solid;
   display: flex;
 }
+.game{
+  display: flex;
+  gap: 50px;
+}

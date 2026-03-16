@@ -26,6 +26,7 @@ function Board({xIsNext,squares,onPlay}){
     else {
       nextSetOfSquares[i] = 'O';
     }
+    onPlay(nextSetOfSquares);
   }
   
   return(
@@ -57,15 +58,45 @@ function Board({xIsNext,squares,onPlay}){
 function Game(){
   
   
-  const [records, setRecords] = useState(Array(9).fill(null));
+  const [records, setRecords] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
   const xIsNext =  currentMove % 2 ===0;
+  console.log("currentMove: "+currentMove);
   const currentRecords = records[currentMove]; 
-  function handlePlay(currentSquares){
-    setRecords([...records,currentRecords])
+  console.log("currentRecords: "+currentRecords);
+
+  function handlePlay(nextSquares){
+    const nextHistory = [...records.slice(0,currentMove+1),nextSquares];
+    setRecords(nextHistory);
+    setCurrentMove(nextHistory.length-1);
+    
   }
+  function jumpTo(nextMove){
+    setCurrentMove(nextMove);
+  }
+  const moves = records.map((squares,move) =>{
+    let description;
+    if (move>0){
+      description = "Go to Move# " + move;
+    }
+    else{
+      description = "Go to start";
+    }
+    return (<li><button onClick={()=>{jumpTo()}}>{description}</button></li>);
+
+  });
+
+
   return(
-    <Board squares={currentRecords} xIsNext = {xIsNext}  />
+    <div className='game'>
+      <div>
+      <Board squares={currentRecords} xIsNext = {xIsNext} onPlay= {handlePlay}  />
+    </div>
+    <div>
+      <ol>{moves}</ol>
+    </div>
+    </div>
+
   );
 }
 
