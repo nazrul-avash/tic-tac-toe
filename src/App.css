@@ -14,12 +14,15 @@
   width: 124px;
 }
 .board{
-  background-color: pink;
-  padding: 20% 35%;
+ 
+  
   border: #fff solid;
   display: flex;
 }
 .game{
+   background-color: pink;
   display: flex;
-  gap: 50px;
+  gap: 150px;
+  justify-content: space-between;
+  padding: 50px;
 }

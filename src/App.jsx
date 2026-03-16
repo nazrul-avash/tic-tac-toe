@@ -16,7 +16,7 @@ export function Square({value, onSquareClick}){
 
 function Board({xIsNext,squares,onPlay}){
   function handleClick(i){
-    if(squares[i]){
+    if(calculateWinner(squares) || squares[i]){
       return;
     }
     const nextSetOfSquares = squares.slice();
@@ -28,9 +28,22 @@ function Board({xIsNext,squares,onPlay}){
     }
     onPlay(nextSetOfSquares);
   }
+  const winner = calculateWinner(squares);
+  let status;
+  if (winner){
+    status ="Winner" + winner;
+  }
+  else {
+    status ="Next Player is: " + (xIsNext?"X":"O");
+  }
   
   return(
+    <>
+    <div>
+        <h1>{status}</h1>
+      </div>
     <div className="board">
+      
     <div >
       <Square  value={squares[0]} onSquareClick={() =>handleClick(0)} />
       <Square  value={squares[1] } onSquareClick={() =>handleClick(1)} />
@@ -53,6 +66,7 @@ function Board({xIsNext,squares,onPlay}){
   
   
     </div>
+    </>
   );
 }
 function Game(){
@@ -82,7 +96,7 @@ function Game(){
     else{
       description = "Go to start";
     }
-    return (<li><button onClick={()=>{jumpTo()}}>{description}</button></li>);
+    return (<li><button onClick={()=>{jumpTo(move)}}>{description}</button></li>);
 
   });
 
@@ -98,6 +112,26 @@ function Game(){
     </div>
 
   );
+}
+function calculateWinner(squares){
+  const lines =[
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (const line of lines){
+    const [a,b,c] = line;
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]){
+      return squares[a];
+    }
+  }
+  return null;
+
 }
 
 function App() {
